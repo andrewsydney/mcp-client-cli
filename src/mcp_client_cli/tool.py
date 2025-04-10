@@ -101,7 +101,7 @@ class McpToolkit(BaseToolkit):
 class McpTool(BaseTool):
     toolkit_name: str
     name: str
-    description: str
+    description: Optional[str] = ""
     args_schema: Type[BaseModel]
     session: Optional[ClientSession]
     toolkit: McpToolkit
@@ -137,7 +137,7 @@ def create_langchain_tool(
     """
     return McpTool(
         name=tool_schema.name,
-        description=tool_schema.description,
+        description=tool_schema.description or "",
         args_schema=jsonschema_to_pydantic(tool_schema.inputSchema),
         session=session,
         toolkit=toolkit,
